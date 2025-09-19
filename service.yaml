@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wisecow-svc
+  namespace: accuknox
+spec:
+  selector:
+    app: wisecow
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 4499
