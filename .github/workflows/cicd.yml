@@ -33,7 +33,7 @@ jobs:
  # intialise the deployment in local k8s 
    - name: Update deployment image
      run: |
-       kubectl set image deployment/wisecow-deployment wisecow-cont=${{secrets.username}}/wisecow:latest -n accuknox
+       kubectl set image deployment/wisecow-deployment wisecow-cont=${{secrets.username}}/wisecow:${{ github.sha }} -n accuknox
        kubectl rollout status deployment/wisecow-deployment -n accuknox
 
    
