@@ -22,14 +22,15 @@ jobs:
   # docker build and push the image to dockerhub registory
    - name: Build and Push Docker image
      run: |
-          IMAGE=venkat14489/wisecow:${{ github.sha }}
-          echo "IMAGE=$IMAGE" >> $GITHUB_ENV
-          docker build -t $IMAGE .
-          docker push $IMAGE
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/wisecow:latest .
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/wisecow:latest
+     # delete local docker image 
+  # - name: Remove local Docker image
+  #   run: docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/wisecow:latest || true
  # intialise the deployment in local k8s 
    - name: Update deployment image
      run: |
-       kubectl set image deployment/wisecow-deployment wisecow-cont=venkat14489/wisecow:${{ github.sha }} -n accuknox
+       kubectl set image deployment/wisecow-deployment wisecow-cont=${{ secrets.DOCKERHUB_USERNAME }}/wisecow:latest -n accuknox
        kubectl rollout status deployment/wisecow-deployment -n accuknox
 
    
