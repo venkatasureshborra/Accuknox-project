@@ -1,0 +1,34 @@
+name: CI/CD for wisecow
+
+on:
+ push:
+  branches:
+   - main:
+pull_request:
+
+jobs:
+ build-and-deploy:
+  steps:
+# code checkout
+   - name: Checkout the code
+     uses: actions/checkout@v3
+# log in to dockerhub
+   - name: docker login
+     uses: docker/login-action@v2
+     with:
+      username: ${{secrets.username}}
+      password: ${{secrets.password}}
+  # docker build and push the image to dockerhub registory
+   - name: Build and Push Docker image
+        run: |
+          IMAGE=venkat14489/wisecow:${{ github.sha }}
+          echo "IMAGE=$IMAGE" >> $GITHUB_ENV
+          docker build -t $IMAGE .
+          docker push $IMAGE
+ # intialise the deployment in local k8s 
+   - name: Update deployment image
+        run: |
+          kubectl set image deployment/wisecow-deployment wisecow-cont=venkat14489/wisecow:${{ github.sha }} -n accuknox
+          kubectl rollout status deployment/wisecow-deployment -n accuknox
+
+   
