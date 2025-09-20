@@ -16,7 +16,7 @@ handleRequest() {
     get_api
 
     # Static message
-    static_msg="Hello from Wisecow App -- cheking no: 4"
+    static_msg="Hello from Wisecow App -- cheking no: 5"
 
     # Dynamic message (fortune + cowsay)
     dynamic_msg="$(fortune | cowsay)"

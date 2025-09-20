@@ -27,9 +27,7 @@ jobs:
           echo "IMAGE=$IMAGE" >> $GITHUB_ENV
           docker build -t $IMAGE .
           docker push $IMAGE
-          if [ -n "$PREV_TAG" ]; then
-            docker rmi $PREV_TAG || true
-          fi
+          docker rmi $PREV_TAG 
  # intialise the deployment in local k8s 
    - name: Update deployment image
      run: |
