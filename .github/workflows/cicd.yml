@@ -22,8 +22,11 @@ jobs:
   # docker build and push the image to dockerhub registory
    - name: Build and Push Docker image
      run: |
-          docker build -t ${{secrets.username}}/wisecow:latest .
-          docker push ${{secrets.username}}/wisecow:latest
+          IMAGE=${{secrets.username}}/wisecow:${{ github.sha }}
+          echo "IMAGE=$IMAGE" >> $GITHUB_ENV
+          docker build -t $IMAGE .
+          docker push $IMAGE
+          docker rmi $IMAGE
      # delete local docker image 
   # - name: Remove local Docker image
   #   run: docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/wisecow:latest || true
