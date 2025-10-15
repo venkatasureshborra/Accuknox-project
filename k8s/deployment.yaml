@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
       - name: wisecow-cont
-        image: venkat14489/wisecow:latest
+        image: venkat14489/wisecow:0fc659fce979c4f8985cff6adcb029937b9c9586
         ports:
         - containerPort: 4499
